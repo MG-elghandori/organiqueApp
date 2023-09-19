@@ -27,10 +27,10 @@
             <div class="font-bold text-lime-600 cursor-point" onclick="deleteMessage()">X</div>
         </div>
         @endif
-        <div class="mt-2 mx-auto max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 md:w-1/2 lg:w-full">
+        <div class="mt-2 mx-auto p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 md:w-1/2 lg:w-2/4">
 
             <div class="flex justify-between mb-4">
-                <h4 class="text-red-700 font-bold">Ajouter Client</h4>
+                <h4 class="text-red-500 font-bold">Ajouter Client</h4>
                 <a href="{{route('Accueil')}}" class="text-sky-500 underline">
                     <span>Accueil</span>
                 </a>
@@ -78,14 +78,13 @@
                     <label for="methodPay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">method de payment</label>
                     <select value="{{ old('methodPay') }}" id="methodPay" name="methodPay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Choisissez la méthode de paiemen</option>
-                        <option value="ORANGE">ORANGE</option>
                         <option value="CIH">CIH</option>
                         <option value="TIJARI">TIJARI</option>
                         <option value="Autres">Autres</option>
                     </select>
                     @if($errors->has('methodPay'))
                     <div class="text-red-500 text-xs mt-1">{{$errors->first('methodPay')}}</div>
-          @endif
+                   @endif
                 </div>
                 <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistre</button>
             </form>
