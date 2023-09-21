@@ -24,7 +24,7 @@
         <div class="flex justify-between mb-3 bg-slate-800 p-2 rounded">
             <h4 class="text-lime-600 font-bold  text-xl">Gestion D'argent</h4>
             <a href="{{route('Accueil')}}" class="text-sky-500 underline">
-                <span>Accueil</span>
+                <span class="text-white bg-red-600 rounded p-1 underline">Accueil</span>
             </a>
         </div>
 
@@ -80,25 +80,22 @@
                     </tr>
                 </tbody>
                 @php
-        
         $totalElement = $itemFinance->compteCIH + $itemFinance->compteTIJARI + $itemFinance->echopping + $itemFinance->Credit + $itemFinance->argent;
              @endphp
                 @endforeach
             </table>
-            <div class="flex justify-between items-center w-full sm:w-auto mb-3 bg-slate-800 p-2 rounded">
 
-            <span class="text-white font-bold  text-xl bg-lime-700 p-1 rounded ">TOTAL :{{ $totalElement }}dh </span>
+            @endif
+        </div>
+
+                <div class="flex justify-between items-center w-full sm:w-auto mb-3 bg-slate-800 p-2 rounded">
+
+                <span class="text-white font-bold text-xl bg-lime-700 p-1 rounded">TOTAL @isset($totalElement) : {{ $totalElement }} dh @else 0 @endisset</span>
            
             <a href="{{route('Financedit',$itemFinance->id)}}" class="w-40 text-center  focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 <span>Gestioner</span>
             </a>
         </div>
-            @else
-            <div class="text-center text-lime-500 mt-3">Rien données disponibles !!</div>
-            @endif
-        </div>
-
-
 
     </div>
 

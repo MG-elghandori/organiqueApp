@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Client;
 use App\Models\Finance;
+use App\Models\Stock;
 use Carbon\Carbon;
 
 class ClientController extends Controller
@@ -16,10 +17,14 @@ class ClientController extends Controller
          return view('client.ListClients',compact("data"));
         }
      
-        public function create(){
-            return view("client.AjouterClient");
+        public function create()
+        {
+            $stocks = Stock::all(); 
+            return view("client.AjouterClient", compact('stocks'));
         }
         
+        
+
         public function store(Request $request){
             $request->validate([
                 'nom'=>'required',
@@ -27,6 +32,7 @@ class ClientController extends Controller
                     'required',
                     'numeric',
                 ],
+                'produit'=>'required',
                 'typeDecompte'=>'required|in:1mois,3mois,6mois,1ans',
                 'prix'=>'required|min:0|numeric',
                 'methodPay'=>'required|in:CIH,ORANGE,TIJARI,Autres',
@@ -53,11 +59,14 @@ class ClientController extends Controller
         $client = new Client();
         $client->nom = $request->nom;
         $client->phone = $request->phone;
+        $client->produit = $request->produit;
         $client->typeDecompte = $typeDecompte;
         $client->prix = $request->prix;
         $client->methodPay = $request->methodPay;
         $client->date_fin = $date_fin;
         $client->save();
+
+         Stock::where('produitStock', $request->produit)->update(['use' => 1]);
 
         $prix = $client->prix;
     
@@ -95,6 +104,7 @@ class ClientController extends Controller
                   'required',
                   'numeric',
               ],
+              'produit'=>'required',
               'typeDecompte'=>'required|in:1mois,3mois,6mois,1ans',
               'prix'=>'required|min:0|numeric',
               'methodPay'=>'required|in:CIH,ORANGE,TIJARI,Autres',
@@ -102,6 +112,7 @@ class ClientController extends Controller
      
           $item->nom = $request->input('nom');
          $item->phone = $request->input('phone');
+         $item->produit = $request->input('produit');
          $item->typeDecompte = $request->input('typeDecompte');
          $item->prix = $request->input('prix');
          $item->methodPay = $request->input('methodPay');

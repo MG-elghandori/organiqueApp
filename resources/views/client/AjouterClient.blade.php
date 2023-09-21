@@ -31,7 +31,7 @@
 
             <div class="flex justify-between mb-4">
                 <h4 class="text-red-500 font-bold">Ajouter Client</h4>
-                <a href="{{route('Accueil')}}" class="text-sky-500 underline">
+                <a href="{{route('Accueil')}}" class="text-white bg-red-600 rounded p-1 underline">
                     <span>Accueil</span>
                 </a>
             </div>
@@ -39,18 +39,35 @@
                 @csrf
                 <div class="mb-2">
                     <label for="nom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom complet</label>
-                    <input type="text" id="nom" name="nom" value="{{ old('nom') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                    <input type="text" id="nom" name="nom" value="{{ old('nom') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                     @if($errors->has('nom'))
                     <div class="text-red-500 text-xs mt-1">{{$errors->first('nom')}}</div>
                     @endif
                 </div>
                 <div class="mb-2">
                     <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numéro de téléphone</label>
-                    <input type="text" value="{{ old('phone') }}" name="phone" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                    <input type="text" value="{{ old('phone') }}" name="phone" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                     @if($errors->has('phone'))
                     <div class="text-red-500 text-xs mt-1">{{ $errors->first('phone') }}</div>
                     @endif
+                </div>
+                <div class="mb-2">
+                    <label for="produit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Le produit</label>
 
+                    <select value="{{ old('produit') }}" id="produit" name="produit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Choisissez le produit</option>
+                        @foreach($stocks as $stock)
+                        @if($stock->use == 0)
+                        <option value="{{ $stock->produitStock }}">{{ $stock->produitStock }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+
+
+
+                    @if($errors->has('produit'))
+                    <div class="text-red-500 text-xs mt-1">{{ $errors->first('produit') }}</div>
+                    @endif
                 </div>
                 <div class="mb-2">
                     <label for="typeDecompte" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type de Compte</label>
@@ -61,17 +78,17 @@
                         <option value="6mois">6 mois</option>
                         <option value="1ans">1 ans</option>
                     </select>
-                @if($errors->has('typeDecompte'))
+                    @if($errors->has('typeDecompte'))
                     <div class="text-red-500 text-xs mt-1">{{$errors->first('typeDecompte')}}</div>
-                 @endif
+                    @endif
                 </div>
 
                 <div class="mb-2">
                     <label for="prix" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Le prix</label>
-                    <input type="text" value="{{ old('prix') }}" name="prix" id="prix" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
-                @if($errors->has('prix'))
+                    <input type="text" value="{{ old('prix') }}" name="prix" id="prix" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                    @if($errors->has('prix'))
                     <div class="text-red-500 text-xs mt-1">{{$errors->first('prix')}}</div>
-                @endif
+                    @endif
                 </div>
 
                 <div class="mb-2">
@@ -84,7 +101,7 @@
                     </select>
                     @if($errors->has('methodPay'))
                     <div class="text-red-500 text-xs mt-1">{{$errors->first('methodPay')}}</div>
-                   @endif
+                    @endif
                 </div>
                 <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregistre</button>
             </form>

@@ -24,8 +24,8 @@
 
         <div class="flex justify-between mb-3 bg-slate-800 p-2 rounded">
             <h4 class="text-red-500 font-bold  text-xl">Lists Des Clients</h4>
-            <a href="{{route('Accueil')}}" class="text-sky-500 underline">
-                <span>Accueil</span>
+            <a href="{{route('Accueil')}}" class="text-white bg-red-600 rounded p-1 underline">
+                <span >Accueil</span>
             </a>
         </div>
 
@@ -166,6 +166,7 @@
         var messageDiv = document.getElementById('message');
         messageDiv.remove();
     }
+    
 </script>
 
 </body>

@@ -40,6 +40,11 @@
             </div>
 
             <div class="mt-3">
+                <strong class="text-green-500">Le produit :</strong>
+                {{ $item->produit }}
+            </div>
+
+            <div class="mt-3">
                 <strong class="text-green-500">type De compte :</strong>
                 {{ $item->typeDecompte }}
             </div>

@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Stock extends Model
 {
     use HasFactory;
-    protected $guarded=[];
-    
-    public function stock(){
-        return $this->belongsTo(Stock::class);
+    protected $guarded = [];
+
+    public function client(){
+        return $this->hasOne(Client::class);
         }
-        
 }

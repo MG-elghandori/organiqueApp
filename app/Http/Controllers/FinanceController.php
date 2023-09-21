@@ -55,21 +55,21 @@ class FinanceController extends Controller
   
     public function updateCompteCIH($prix)
 {
-    $finances = Finance::first(); // Récupère le premier enregistrement de la table Finances
-    $finances->compteCIH += $prix; // Incrémente la valeur de la colonne compteBank de la table Finances avec le prix
-    $finances->save(); // Sauvegarde les modifications dans la base de données
+    $finances = Finance::first();
+    $finances->compteCIH += $prix;
+    $finances->save();
 }
 
     public function updateCompteTIJARI($prix)
 {
-    $finances = Finance::first(); // Récupère le premier enregistrement de la table Finances
-    $finances->compteTIJARI += $prix; // Incrémente la valeur de la colonne compteBank de la table Finances avec le prix
-    $finances->save(); // Sauvegarde les modifications dans la base de données
+    $finances = Finance::first(); 
+    $finances->compteTIJARI += $prix;
+    $finances->save(); 
 }
 public function updateArgent($prix)
 {
-    $finances = Finance::first(); // Récupère le premier enregistrement de la table Finances
-    $finances->argent += $prix; // Incrémente la valeur de la colonne argent de la table Finances avec le prix
-    $finances->save(); // Sauvegarde les modifications dans la base de données
+    $finances = Finance::first();
+    $finances->argent += $prix; 
+    $finances->save(); 
 }
 }

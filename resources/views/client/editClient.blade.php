@@ -26,7 +26,7 @@
 
             <div class="flex justify-between mb-4">
             <h3 class="text-red-500 font-bold"> Modifer Le Client Numéro <span class="text-white font-bold ">{{ $item->id }}</span> </h3>
-                <a href="{{route('listClients')}}" class="text-sky-500 underline">
+                <a href="{{route('listClients')}}" class="text-white bg-red-600 rounded p-1 underline">
                     <span>page précédente</span>
                 </a>
             </div>
@@ -47,7 +47,13 @@
                     @if($errors->has('phone'))
                     <div class="text-red-500 text-xs mt-1">{{ $errors->first('phone') }}</div>
                     @endif
-
+                </div>
+                <div class="mb-2">
+                    <label for="produit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Le produit</label>
+                    <input type="text" value="{{$item->produit}}" name="produit" id="produit" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                    @if($errors->has('produit'))
+                    <div class="text-red-500 text-xs mt-1">{{ $errors->first('produit') }}</div>
+                    @endif
                 </div>
                 <div class="mb-2">
                     <label for="typeDecompte" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type de Compte</label>

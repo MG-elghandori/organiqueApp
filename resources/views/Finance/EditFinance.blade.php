@@ -34,7 +34,7 @@
             <div class="flex justify-between mb-4">
                 <h4 class="text-lime-600 font-bold  text-xl">Gestion D'argent</h4>
                 <a href="{{route('Financepage')}}" class="text-sky-500 underline">
-                    <span>page précédente</span>
+                    <span  class="text-white bg-red-600 rounded p-1 underline">page précédente</span>
                 </a>
             </div>
 

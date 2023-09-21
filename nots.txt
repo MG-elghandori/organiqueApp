@@ -1,3 +1,6 @@
 +++++++++site d'icons
 https://heroicons.com/
 +++++++++
+
+php artisan make:seeder FinanceTableSeeder
+php artisan db:seed
