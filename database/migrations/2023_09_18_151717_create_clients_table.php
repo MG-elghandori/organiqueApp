@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('nom', 100);
             $table->string('phone', 256);
             $table->string('produit', 256);
-            $table->enum('typeDecompte', ['1mois', '3mois', '6mois', '1ans']);
+            $table->enum('typeDecompte',['1mois', '3mois', '6mois', '1ans']);
             $table->float('prix');
-            $table->enum("methodPay", ["CIH", "ORANGE", "TIJARI", "Autres"]);
+            $table->enum("methodPay",["CIH", "ORANGE", "TIJARI", "Autres"]);
             $table->date('date_fin')->default(Carbon::now()->addMonth());
-       
+            $table->boolean('fidele')->default(false);
             $table->timestamps();
         });
     }

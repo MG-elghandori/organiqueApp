@@ -4,3 +4,8 @@ https://heroicons.com/
 
 php artisan make:seeder FinanceTableSeeder
 php artisan db:seed
+php artisan make:middleware AuthCheck 
+
+login:
+mg@gmail.com 
+mg@12345

@@ -71,7 +71,7 @@
                 <tbody>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                        
-                    @if ($item->date_fin === now()->format('Y-m-d'))
+                    @if ($item->date_fin <= now()->format('Y-m-d'))
                         <td scope="row" class="bg-rose-700 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             #{{ $item->id }}
                         </td>

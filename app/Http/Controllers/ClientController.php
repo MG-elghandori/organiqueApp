@@ -12,35 +12,37 @@ use Carbon\Carbon;
 class ClientController extends Controller
 {
 
-    public function index(){
-        $data= Client::paginate(6);
-         return view('client.ListClients',compact("data"));
-        }
-     
-        public function create()
-        {
-            $stocks = Stock::all(); 
-            return view("client.AjouterClient", compact('stocks'));
-        }
-        
-        
+    public function index()
+    {
+        $data = Client::paginate(6);
+        return view('client.ListClients', compact("data"));
+    }
 
-        public function store(Request $request){
-            $request->validate([
-                'nom'=>'required',
-                'phone' => [
-                    'required',
-                    'numeric',
-                ],
-                'produit'=>'required',
-                'typeDecompte'=>'required|in:1mois,3mois,6mois,1ans',
-                'prix'=>'required|min:0|numeric',
-                'methodPay'=>'required|in:CIH,ORANGE,TIJARI,Autres',
-            ]);
-    
-           
+    public function create()
+    {
+        $stocks = Stock::all();
+        return view("client.AjouterClient", compact('stocks'));
+    }
+
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required',
+            'phone' => [
+                'required',
+                'numeric',
+            ],
+            'produit' => ['required', 'not_in:Choisissez le produit'],
+            'typeDecompte' => 'required|in:1mois,3mois,6mois,1ans',
+            'prix' => 'required|min:0|numeric',
+            'methodPay' => 'required|in:CIH,ORANGE,TIJARI,Autres',
+        ]);
+
+
         $typeDecompte = $request->input('typeDecompte');
-    
+
         $date_fin = Carbon::now();
         switch ($typeDecompte) {
             case '1mois':
@@ -66,77 +68,114 @@ class ClientController extends Controller
         $client->date_fin = $date_fin;
         $client->save();
 
-         Stock::where('produitStock', $request->produit)->update(['use' => 1]);
+        Stock::where('produitStock', $request->produit)->update(['use' => 1]);
 
         $prix = $client->prix;
-    
-       
+
+
         $methodPay = $request->methodPay;
         $finances = new Finance();
-    
-       if ($methodPay == 'CIH') {
+
+        if ($methodPay == 'CIH') {
             $finances->updateCompteCIH($prix);
         } elseif ($methodPay == 'TIJARI') {
             $finances->updateCompteTIJARI($prix);
         } elseif ($methodPay == 'Autres') {
             $finances->updateArgent($prix);
         }
-            return redirect()->route('AjouterClient')->with("success", "L'ajout de la nouvelle annonce a bien réussi!");
-        }
+        return redirect()->route('AjouterClient')->with("success", "L'ajout de la nouvelle annonce a bien réussi!");
+    }
 
 
-        public function destroy($id){
-           $item=Client::findOrFail($id);
-           $item->delete();
-           return redirect()->route('listClients')->with('success', 'L\'élément a été supprimé avec succès');
+    public function destroy($id)
+    {
+        $item = Client::findOrFail($id);
+        $item->delete();
+        return redirect()->route('listClients')->with('success', 'L\'élément a été supprimé avec succès');
+    }
+
+    public function edit($id)
+    {
+        $item = Client::findOrFail($id);
+        return view('client.editClient', compact("item"));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $item = Client::findOrFail($id);
+        $request->validate([
+            'nom' => 'required',
+            'phone' => [
+                'required',
+                'numeric',
+            ],
+            'produit' => ['required', 'not_in:Choisissez le produit'],
+            'typeDecompte' => 'required|in:1mois,3mois,6mois,1ans',
+            'prix' => 'required|min:0|numeric',
+            'methodPay' => 'required|in:CIH,ORANGE,TIJARI,Autres',
+        ]);
+
+        $item->nom = $request->input('nom');
+        $item->phone = $request->input('phone');
+        $item->produit = $request->input('produit');
+        $item->typeDecompte = $request->input('typeDecompte');
+        $item->prix = $request->input('prix');
+        $item->methodPay = $request->input('methodPay');
+
+        $date_creation = Carbon::now();
+
+        switch ($item->typeDecompte) {
+            case '1mois':
+                $date_fin = $date_creation->addMonth();
+                break;
+            case '3mois':
+                $date_fin = $date_creation->addMonths(3);
+                break;
+            case '6mois':
+                $date_fin = $date_creation->addMonths(6);
+                break;
+            case '1ans':
+                $date_fin = $date_creation->addYear();
+                break;
         }
-     
-        public function edit($id){
-           $item=Client::findOrFail($id);
-           return view('client.editClient',compact("item"));
+        // $item->fidele = 1;
+
+        if ($date_fin < Carbon::now()) {
+            $date_fin = Carbon::now()->add($date_creation->diff($date_fin));
         }
-     
-        public function update(Request $request,$id){
-           $item = Client::findOrFail($id);
-           $request->validate([
-              'nom'=>'required',
-              'phone' => [
-                  'required',
-                  'numeric',
-              ],
-              'produit'=>'required',
-              'typeDecompte'=>'required|in:1mois,3mois,6mois,1ans',
-              'prix'=>'required|min:0|numeric',
-              'methodPay'=>'required|in:CIH,ORANGE,TIJARI,Autres',
-          ]);
-     
-          $item->nom = $request->input('nom');
-         $item->phone = $request->input('phone');
-         $item->produit = $request->input('produit');
-         $item->typeDecompte = $request->input('typeDecompte');
-         $item->prix = $request->input('prix');
-         $item->methodPay = $request->input('methodPay');
-         $date_creation = Carbon::parse($item->created_at);
-         switch ($item->typeDecompte) {
-           case '1mois':
-               $item->date_fin = $date_creation->addMonth();
-               break;
-           case '3mois':
-               $item->date_fin = $date_creation->addMonths(3);
-               break;
-           case '6mois':
-               $item->date_fin = $date_creation->addMonths(6);
-               break;
-           case '1ans':
-               $item->date_fin = $date_creation->addYear();
-               break;
-       }
-         $item->save();
-         return redirect()->route('listClients')->with('success', 'L\'élément a été mis à jour avec succès');
-        }
-     
-        public function show($id){
-           $item=Client::findOrFail($id);
-           return view('client.DetailsClient',compact("item"));
-        }
+
+        $item->date_fin = $date_fin;
+        $item->save();
+
+
+
+
+        return redirect()->route('listClients')->with('success', 'L\'élément a été mis à jour avec succès');
+    }
+
+    public function show($id)
+    {
+        $item = Client::findOrFail($id);
+        return view('client.DetailsClient', compact("item"));
+    }
+
+    public function fidele(){
+        $clientFidele = Client::paginate(10);
+        return view('client.FideleClient',compact("clientFidele"));
+    }
+
+    public function updateFidele($id){
+        $editFidele=Client::findOrFail($id);
+        $editFidele->fidele = 1;
+        $editFidele->save();
+        return redirect()->route('listClients')->with('success', 'L\'élément a été mis à jour avec succès pour notre client fidèle.');
+    }
+
+
+    public function AnulerFidele($id){
+        $editFidele=Client::findOrFail($id);
+        $editFidele->fidele = 0;
+        $editFidele->save();
+        return redirect()->route('ClientFidele');
+    }
 }
