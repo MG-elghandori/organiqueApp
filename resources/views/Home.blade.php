@@ -837,7 +837,7 @@
             <div class="flex justify-between items-center">
                 <div class="bg-red-600 p-2 text-white rounded w-40 text-center mt-2 ml-3">LOGO</div>
                 <div class="mt-2">
-                    <a href="{{route('login')}}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">log out</a>
+                    <a href="{{route('login')}}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Se Déconnecter</a>
                 </div>
 
             </div>

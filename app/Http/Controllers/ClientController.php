@@ -14,7 +14,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $data = Client::paginate(6);
+        $data = Client::orderBy('created_at', 'desc')->paginate(6);
         return view('client.ListClients', compact("data"));
     }
 
@@ -160,7 +160,7 @@ class ClientController extends Controller
     }
 
     public function fidele(){
-        $clientFidele = Client::paginate(10);
+        $clientFidele = Client::orderBy('created_at', 'desc')->paginate(10);
         return view('client.FideleClient',compact("clientFidele"));
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class StockController extends Controller
 {
     public function index(){
-        $dataStock=Stock::all();
+        $dataStock = Stock::orderBy('created_at', 'desc')->get();
         return view('Stock.listStock',compact('dataStock'));
     }
 

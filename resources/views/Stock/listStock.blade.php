@@ -102,13 +102,13 @@
                         </td>
 
                         <td class="px-4 py-2 font-bold border w-1/2">
-                            <span class="flex flex-col gap-2" style="max-height: 400px; overflow-y: auto;">
+                        <span class="flex flex-col gap-2" style="max-height: 400px; overflow-y: auto;">
                                 @foreach($dataStock as $itemStock)
 
                                 @if($itemStock->use == 1)
                                 <span class="flex justify-between items-center bg-white drop-shadow-lg p-3 border-orange-400 border rounded flex-col sm:flex-row">
-                                    <div class="flex flex-col">
-                                        <span class="text-lg"> {{$itemStock->produitStock}}</span>
+                                <div class="flex flex-col">
+                                <span class="text-lg"> {{$itemStock->produitStock}}</span>
                                         <span class="text-xs text-black">{{$itemStock->created_at}}</span>
                                     </div>
                                     <form action="{{route('delteStock.destroy', $itemStock->id) }}" method="POST" class="flex gap-1 mt-2">
